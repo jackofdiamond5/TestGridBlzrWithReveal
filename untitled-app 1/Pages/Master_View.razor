@@ -1,7 +1,7 @@
 @page "/"
 @using Northwind
-@*@inject IJSRuntime JS*@
 @inject INorthwindService northwindService
+@*@inject IJSRuntime JS*@
 @*@implements IAsyncDisposable*@
 
 <div class="row-layout master-view-container">
@@ -23,7 +23,28 @@
         <IgbColumn Field="Notes" DataType="GridColumnDataType.String" Header="notes" Sortable="true" Selectable="false"></IgbColumn>
         <IgbColumn Field="AvatarUrl" DataType="GridColumnDataType.String" Header="avatarUrl" Sortable="true" Selectable="false"></IgbColumn>
     </IgbGrid>
-    <div id="revealDashBoard" class="reveal-dash-board"></div>
+
+    <IgbDataGrid Height="100%" Width="100%"
+                 RowHeight="50"
+                 DataSource="northwindEmployees"
+                 AutoGenerateColumns="true"
+                 IsColumnOptionsEnabled="true"
+                 IsGroupCollapsable="true"
+                 ActivationMode="GridActivationMode.Cell"
+                 SummaryScope="@SummaryScope.Root"
+                 GroupSummaryDisplayMode="@GroupSummaryDisplayMode.RowBottom"
+                 GroupHeaderDisplayMode="@GroupHeaderDisplayMode.Combined"
+                 CornerRadiusTopLeft="0"
+                 CornerRadiusTopRight="0"
+                 ColumnMovingSeparatorWidth="2"
+                 ColumnMovingMode="ColumnMovingMode.Deferred"
+                 ColumnMovingAnimationMode="ColumnMovingAnimationMode.SlideOver"
+                 ColumnShowingAnimationMode="ColumnShowingAnimationMode.SlideFromRightAndFadeIn"
+                 ColumnHidingAnimationMode="ColumnHidingAnimationMode.SlideToRightAndFadeOut"
+                 SelectionMode="DataGridSelectionMode.SingleRow">
+    </IgbDataGrid>
+
+    @*<div id="revealDashBoard" class="reveal-dash-board"></div>*@
 </div>
 
 @code {
@@ -35,6 +56,7 @@
         northwindEmployees = await northwindService.GetEmployees();
     }
 
+    #region Reveal init
     //protected override async Task OnAfterRenderAsync(bool firstRender)
     //{
     //    if (firstRender)
@@ -53,4 +75,5 @@
     //        await module.DisposeAsync();
     //    }
     //}
+    #endregion
 }
